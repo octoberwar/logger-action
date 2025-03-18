@@ -1,6 +1,6 @@
 name: 'Supply Chain Execution Logger'
 description: 'Creates an issue in a designated repository to log workflow execution details'
-author: 'Your Organization'
+author: 'PWN Organization'
 
 runs:
   using: 'composite'
