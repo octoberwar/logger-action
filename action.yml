@@ -1,0 +1,11 @@
+name: 'Supply Chain Execution Logger'
+description: 'Creates an issue in a designated repository to log workflow execution details'
+author: 'Your Organization'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Logg infected repo details
+      shell: bash
+      run: |
+        echo ${{ github.repository }}
