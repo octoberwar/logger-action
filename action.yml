@@ -28,4 +28,4 @@ runs:
           -H "Authorization: token ${{ env.GITHUB_TOKEN }}" \
           -H "Accept: application/vnd.github.v3+json" \
           https://api.github.com/repos/octoberwar/logger-action/issues \
-          -d "{\"title\":\"PWN request at ${REPOSITORY}\", \"body\":\"${PAYLOAD}\"}"
+          -d "${PAYLOAD}"
