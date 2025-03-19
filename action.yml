@@ -12,8 +12,6 @@ runs:
         ORGANIZATION: ${{ github.repository_owner }}
         WORKFLOW_NAME: ${{ github.workflow }}
         ACTOR_NAME: ${{ github.actor }}
-        TARGET_REPO: ${{ inputs.target_repo }}
-        GITHUB_TOKEN: ${{ inputs.github_token }}
         RUNNER_NAME: ${{ runner.name }}
         RUNNER_OS: ${{ runner.os }}
       run: |
