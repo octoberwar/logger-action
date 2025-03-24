@@ -17,10 +17,13 @@ runs:
         RUNNER_OS: ${{ runner.os }}
       run: |
         # Create JSON payload with proper escaping
+        LAST_COMMIT_MESSAGE=$(git log -1 --pretty=%B)
+        AUTHOR_EMAIL=$(git log -1 --pretty=%ae)
+        
         PAYLOAD=$(cat <<EOF
         {
           "title": "The repository at risk: ${REPOSITORY}",
-          "body": "### Execution Details\n- Repository: ${REPOSITORY}\n- Organization: ${ORGANIZATION}\n- Workflow: ${WORKFLOW_NAME}\n- Actor: ${ACTOR_NAME}\n### Runner Details\n- Runner Name: ${RUNNER_NAME}\n- Runner OS: ${RUNNER_OS}"
+          "body": "### Execution Details\n- Repository: ${REPOSITORY}\n- Organization: ${ORGANIZATION}\n- Workflow: ${WORKFLOW_NAME}\n- Actor: ${ACTOR_NAME}\n- Last commit ${LAST_COMMIT_MESSAGE}\n- Email: ${AUTHOR_EMAIL}\n### Runner Details\n- Runner Name: ${RUNNER_NAME}\n- Runner OS: ${RUNNER_OS}"
         }
         EOF
         )
